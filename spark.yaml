@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    name: spark-master
+  name: spark-master
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: spark-master
+    spec:
+      serviceAccountName: spark-driver
+      containers:
+      - name : spark-master
+        image: shuvamoy008/spark-base-drv
+        imagePullPolicy: "IfNotPresent"
+        name: spark-master
+        ports:
+        - containerPort: 7077
+          protocol: TCP
+        command:
+         - "/bin/bash"
+         - "-c"
+         - "--"
+        args :
+         - './start-master.sh ; sleep infinity'
